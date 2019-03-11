@@ -13,7 +13,6 @@ function getRepoContributors(repoOwner, repoName, cb) {
   };
 
   request(options, function(err, res, body) {
-    // if (!err && res.statusCode == 200){
     var data = JSON.parse(body);
 
     cb(err, data);
@@ -33,18 +32,18 @@ function downloadImageByURL(url, filePath) {
         })
          .pipe(fs.createWriteStream(filePath))
          .on('finish', function (){
-          console.log('Download completed.')
+          console.log('Download completed.');
          });
            // ...
 }
 
-downloadImageByURL('https://avatars3.githubusercontent.com/u/1199584?v=4', "test.jpg")
-
-// console.log('Welcome to the GitHub Avatar Downloader!');
-// getRepoContributors("jquery", "jquery", function(err, result) {
-//   for (let i = 0; i < result.length; i++){
-//    // var avatar = result[i][avatar_url];
-//   console.log("Errors:", err);
-//   console.log("Result:", result[i]["avatar_url"]);
-// }
-// });
+console.log('Welcome to the GitHub Avatar Downloader!');
+getRepoContributors("jquery", "jquery", function(err, result) {
+  for (let i = 0; i < result.length; i++){
+    var path = "avatars/" + result[i].login + ".jpg";
+    var url = result[i].avatar_url;
+    console.log("file path: ", path );
+    console.log("Avatar URL:", url);
+    downloadImageByURL(url, path);
+  }
+});
