@@ -50,12 +50,22 @@ getRepoContributors(owner, repo, function(result) {
     console.log('missing information!');
   } else {
   for (let i = 0; i < result.length; i++){
+    //create folder for avatar if folder doesn't exist
+    if(!fs.existsSync('avatars/')){
+      fs.mkdir('avatars/',function (err){
+        if (err) {
+          return console.error(err);
+        }
+        console.log("Folder created.")
+      });
+    }
     var path = "avatars/" + result[i].login + ".jpg";
     var url = result[i].avatar_url;
     console.log("file path: ", path );
     console.log("Avatar URL:", url);
     //loop and output images
     downloadImageByURL(url, path);
+    } console.log('file path do not exist');
   }
-  }
+
 });
