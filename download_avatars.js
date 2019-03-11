@@ -14,14 +14,14 @@ function getRepoContributors(repoOwner, repoName, cb) {
     'Authorization': 'token ' + secrets.GITHUB_TOKEN
     }
   };
-
+//passing data to callback in json style
   request(options, function(err, res, body) {
+    if (!err){
     var data = JSON.parse(body);
 
-    cb(err, data);
-  // ...
-
-});
+    cb(data);
+    }
+  });
 }
 
 
@@ -33,15 +33,18 @@ function downloadImageByURL(url, filePath) {
          .on('response', function (response){
           console.log('Downloading image...');
         })
+         //saving image with designated filepath
          .pipe(fs.createWriteStream(filePath))
          .on('finish', function (){
           console.log('Download completed.');
          });
-           // ...
+
 }
 
 console.log('Welcome to the GitHub Avatar Downloader!');
-getRepoContributors(owner, repo, function(err, result) {
+
+getRepoContributors(owner, repo, function(result) {
+  //in case of missing input
   if (!owner || !repo){
     console.log('missing information!');
   } else {
@@ -50,6 +53,7 @@ getRepoContributors(owner, repo, function(err, result) {
     var url = result[i].avatar_url;
     console.log("file path: ", path );
     console.log("Avatar URL:", url);
+    //loop and output images
     downloadImageByURL(url, path);
   }
   }
