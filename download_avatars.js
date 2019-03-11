@@ -46,8 +46,8 @@ console.log('Welcome to the GitHub Avatar Downloader!');
 
 getRepoContributors(owner, repo, function(result) {
   //in case of missing input
-  if (!owner || !repo){
-    console.log('missing information!');
+  if (process.argv.length > 4 || !owner || !repo){
+    console.log('input error!');
   } else {
   for (let i = 0; i < result.length; i++){
     //create folder for avatar if folder doesn't exist
