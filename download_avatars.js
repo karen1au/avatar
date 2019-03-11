@@ -1,5 +1,6 @@
 var request = require('request');
-var secrets = require('./secrets');
+var dotenv = require('dotenv').config();
+var key = process.env.secretkey;
 var fs = require('fs');
 var owner = process.argv[2];
 var repo = process.argv[3];
@@ -11,7 +12,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
     headers: {
     'User-Agent': 'request',
-    'Authorization': 'token ' + secrets.GITHUB_TOKEN
+    'Authorization': 'token ' + key
     }
   };
 //passing data to callback in json style
